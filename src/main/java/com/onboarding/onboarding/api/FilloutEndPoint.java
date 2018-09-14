@@ -5,6 +5,8 @@ import com.onboarding.onboarding.model.Fillout;
 import com.onboarding.onboarding.model.Form;
 import com.onboarding.onboarding.persistence.EmployeeService;
 import com.onboarding.onboarding.persistence.FormService;
+import config.FillConfiguration;
+import merge.PDFFiller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +14,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
+import java.io.PrintStream;
+import java.util.List;
+import java.util.Map;
 
 @Path("fillout")
 @Component

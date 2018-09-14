@@ -15,6 +15,8 @@ public class JerseyConfig extends ResourceConfig {
         register(ManagerEndPoint.class);
         register(FilloutEndPoint.class);
         register(FormEndPoint.class);
+        register(YCProgramEndPoint.class);
+        register(TeamEndPoint.class);
 
     }
 

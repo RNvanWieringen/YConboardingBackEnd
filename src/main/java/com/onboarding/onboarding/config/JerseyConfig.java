@@ -12,6 +12,7 @@ import com.onboarding.onboarding.api.*;
 public class JerseyConfig extends ResourceConfig {
     public JerseyConfig(){
         register(EmployeeEndPoint.class);
+        register(ManagerEndPoint.class);
 
     }
 

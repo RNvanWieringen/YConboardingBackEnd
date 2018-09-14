@@ -1,7 +1,7 @@
 package com.onboarding.onboarding.api;
 
-import com.onboarding.onboarding.model.Employee;
-import com.onboarding.onboarding.persistence.EmployeeService;
+import com.onboarding.onboarding.model.Manager;
+import com.onboarding.onboarding.persistence.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,29 +10,25 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
-@Path("employee")
+@Path("manager")
 @Component
-public class EmployeeEndPoint {
+public class ManagerEndPoint {
 
     @Autowired
-    private EmployeeService employeeService;
+    private ManagerService managerService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listGroep(){
-        Iterable <Employee> employee = employeeService.findAll();
-        return Response.ok(employee).build();
+    public Response listGroep() {
+        Iterable<Manager> manager = managerService.findAll();
+        return Response.ok(manager).build();
     }
-
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public Response postEmployee(Employee employee){
-        Employee result = employeeService.save(employee);
+    public  Response postManager(Manager manager){
+        Manager result = managerService.save(manager);
         return Response.accepted(result.getEmail()).build();
     }
-
-
-
 }

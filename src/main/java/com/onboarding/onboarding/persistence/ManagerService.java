@@ -24,4 +24,5 @@ public class ManagerService {
         Iterable <Manager> result = managerRepository.findAll();
         return result;
     }
+    
 }

@@ -1,5 +1,6 @@
 package com.onboarding.onboarding.persistence;
 
+import com.onboarding.onboarding.model.Manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

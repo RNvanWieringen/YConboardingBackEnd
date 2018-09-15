@@ -18,6 +18,7 @@ public class Employee {
     private String initials;
     private String firstName;
     private String lastName;
+    private String fullName = firstName + " " + lastName;
     private String callingName;
 
     private String phoneNumber;
@@ -31,6 +32,7 @@ public class Employee {
     private String nationality;
     private String bsn;
 
+    private String gender;
     private String maritalState;
     private String dietaryWishes;
 
@@ -50,6 +52,7 @@ public class Employee {
         hashMapData.put("email", this.email);
         hashMapData.put("firstName", this.firstName);
         hashMapData.put("lastName", this.lastName);
+        hashMapData.put("fullName", this.fullName);
         hashMapData.put("phoneNumber", this.phoneNumber);
         hashMapData.put("initials", this.initials);
         hashMapData.put("callingName", this.callingName);
@@ -59,6 +62,7 @@ public class Employee {
         hashMapData.put("houseNumberExt", this.houseNumberExt);
         hashMapData.put("nationality", this.nationality);
         hashMapData.put("bsn", this.bsn);
+        hashMapData.put("gender", this.gender);
         hashMapData.put("maritalState", this.maritalState);
         hashMapData.put("dietaryWishes", this.dietaryWishes);
         hashMapData.put("bankName", this.bankName);

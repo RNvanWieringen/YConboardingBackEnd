@@ -18,7 +18,6 @@ public class Employee {
     private String initials;
     private String firstName;
     private String lastName;
-    private String fullName = firstName + " " + lastName;
     private String callingName;
 
     private String phoneNumber;
@@ -31,6 +30,7 @@ public class Employee {
 
     private String nationality;
     private String bsn;
+    private String placeOfBirth;
 
     private String gender;
     private String maritalState;
@@ -52,7 +52,8 @@ public class Employee {
         hashMapData.put("email", this.email);
         hashMapData.put("firstName", this.firstName);
         hashMapData.put("lastName", this.lastName);
-        hashMapData.put("fullName", this.fullName);
+        hashMapData.put("fullName", firstName + " " + lastName);
+        hashMapData.put("placeOfBirth", this.placeOfBirth);
         hashMapData.put("phoneNumber", this.phoneNumber);
         hashMapData.put("initials", this.initials);
         hashMapData.put("callingName", this.callingName);
@@ -283,5 +284,23 @@ public class Employee {
 
     public void setFillout(List<Fillout> fillout) {
         this.fillout = fillout;
+    }
+
+
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getPlaceOfBirth() {
+        return placeOfBirth;
+    }
+
+    public void setPlaceOfBirth(String placeOfBirth) {
+        this.placeOfBirth = placeOfBirth;
     }
 }

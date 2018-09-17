@@ -38,4 +38,6 @@ public class Progress {
     public void setContractSigned(boolean contractSigned) {
         this.contractSigned = contractSigned;
     }
+
+
 }

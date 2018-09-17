@@ -2,9 +2,7 @@ package com.onboarding.onboarding.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @Entity
 public class Employee {
@@ -15,34 +13,38 @@ public class Employee {
 
     private String email;
 
-    private String initials;
     private String firstName;
     private String lastName;
-    private String callingName;
-
     private String phoneNumber;
-
+    private String initials;
+    private String callingName;
     private String street;
-    private int    houseNumber;
-    private String houseNumberExt;
     private String postalcode;
     private String city;
-
+    private String houseNumberExt;
     private String nationality;
-    private String bsn;
+    private String gender;
+    private String birthPlace;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    private String bsn;
     private String maritalState;
     private String dietaryWishes;
-
-    private String nameBankAccountOwner;
-    private String bankAccountIBAN;
     private String bankName;
-
+    private String bankNumber;
+    private String bankPersonName;
     private String emergencyPerson;
     private String emergencyNumber;
 
     private boolean loonheffing;
-
+    private int houseNumber;
     private LocalDate birthDate;
 
     public HashMap getHashMapData() {
@@ -62,32 +64,30 @@ public class Employee {
         hashMapData.put("maritalState", this.maritalState);
         hashMapData.put("dietaryWishes", this.dietaryWishes);
         hashMapData.put("bankName", this.bankName);
-        hashMapData.put("bankNumber", this.bankAccountIBAN);
-        hashMapData.put("bankPersonName", this.nameBankAccountOwner);
+        hashMapData.put("bankNumber", this.bankNumber);
+        hashMapData.put("bankPersonName", this.bankPersonName);
         hashMapData.put("emergencyPerson", this.emergencyPerson);
         hashMapData.put("emergencyNumber", this.emergencyNumber);
-        hashMapData.put("loonheffing", this.loonheffing + "");
-        hashMapData.put("houseNumber", this.houseNumber + "");
-        hashMapData.put("birthDate", this.birthDate + "");
+        hashMapData.put("loonheffing", this.loonheffing+"");
+        hashMapData.put("houseNumber", this.houseNumber+"");
+        hashMapData.put("birthDate", this.birthDate+"");
+        hashMapData.put("fullName", this.firstName + " " + this.lastName);
+        hashMapData.put("gender", gender);
+        hashMapData.put("streetHousenumber", this.street + " " + this.houseNumber + "-" + this.houseNumberExt);
+        hashMapData.put("birthPlace", birthPlace);
 
         return hashMapData;
-    }
 
+
+
+    }
 
     @ManyToOne
     private YCProgram ycProgram;
 
-    @OneToMany
-    private List<Fillout> fillout = new ArrayList<>();
+   // @OneToMany
+   // private List<Fillout> fillout = new ArrayList<>();
 
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getEmail() {
         return email;
@@ -95,14 +95,6 @@ public class Employee {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getInitials() {
-        return initials;
-    }
-
-    public void setInitials(String initials) {
-        this.initials = initials;
     }
 
     public String getFirstName() {
@@ -121,14 +113,6 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public String getCallingName() {
-        return callingName;
-    }
-
-    public void setCallingName(String callingName) {
-        this.callingName = callingName;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -137,28 +121,28 @@ public class Employee {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getInitials() {
+        return initials;
+    }
+
+    public void setInitials(String initials) {
+        this.initials = initials;
+    }
+
+    public String getCallingName() {
+        return callingName;
+    }
+
+    public void setCallingName(String callingName) {
+        this.callingName = callingName;
+    }
+
     public String getStreet() {
         return street;
     }
 
     public void setStreet(String street) {
         this.street = street;
-    }
-
-    public int getHouseNumber() {
-        return houseNumber;
-    }
-
-    public void setHouseNumber(int houseNumber) {
-        this.houseNumber = houseNumber;
-    }
-
-    public String getHouseNumberExt() {
-        return houseNumberExt;
-    }
-
-    public void setHouseNumberExt(String houseNumberExt) {
-        this.houseNumberExt = houseNumberExt;
     }
 
     public String getPostalcode() {
@@ -175,6 +159,14 @@ public class Employee {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getHouseNumberExt() {
+        return houseNumberExt;
+    }
+
+    public void setHouseNumberExt(String houseNumberExt) {
+        this.houseNumberExt = houseNumberExt;
     }
 
     public String getNationality() {
@@ -209,28 +201,28 @@ public class Employee {
         this.dietaryWishes = dietaryWishes;
     }
 
-    public String getNameBankAccountOwner() {
-        return nameBankAccountOwner;
-    }
-
-    public void setNameBankAccountOwner(String nameBankAccountOwner) {
-        this.nameBankAccountOwner = nameBankAccountOwner;
-    }
-
-    public String getBankAccountIBAN() {
-        return bankAccountIBAN;
-    }
-
-    public void setBankAccountIBAN(String bankAccountIBAN) {
-        this.bankAccountIBAN = bankAccountIBAN;
-    }
-
     public String getBankName() {
         return bankName;
     }
 
     public void setBankName(String bankName) {
         this.bankName = bankName;
+    }
+
+    public String getBankNumber() {
+        return bankNumber;
+    }
+
+    public void setBankNumber(String bankNumber) {
+        this.bankNumber = bankNumber;
+    }
+
+    public String getBankPersonName() {
+        return bankPersonName;
+    }
+
+    public void setBankPersonName(String bankPersonName) {
+        this.bankPersonName = bankPersonName;
     }
 
     public String getEmergencyPerson() {
@@ -257,6 +249,14 @@ public class Employee {
         this.loonheffing = loonheffing;
     }
 
+    public int getHouseNumber() {
+        return houseNumber;
+    }
+
+    public void setHouseNumber(int houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+
     public LocalDate getBirthDate() {
         return birthDate;
     }
@@ -265,19 +265,11 @@ public class Employee {
         this.birthDate = birthDate;
     }
 
-    public YCProgram getYcProgram() {
-        return ycProgram;
-    }
+    public void setGender(String gender) { this.gender = gender; }
 
-    public void setYcProgram(YCProgram ycProgram) {
-        this.ycProgram = ycProgram;
-    }
+    public String getGender() { return this.gender; }
 
-    public List<Fillout> getFillout() {
-        return fillout;
-    }
+    public String getBirthPlace() { return this.birthPlace; }
 
-    public void setFillout(List<Fillout> fillout) {
-        this.fillout = fillout;
-    }
+    public void setBirthPlace(String birthPlace) { this.birthPlace = birthPlace; }
 }

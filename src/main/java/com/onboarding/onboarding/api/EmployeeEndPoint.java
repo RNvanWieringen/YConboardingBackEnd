@@ -1,14 +1,17 @@
 package com.onboarding.onboarding.api;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import com.onboarding.onboarding.model.Employee;
 import com.onboarding.onboarding.persistence.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 
 @Path("employee")
 @Component
@@ -24,15 +27,12 @@ public class EmployeeEndPoint {
         return Response.ok(employee).build();
     }
 
-
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public Response postEmployee(Employee employee){
         Employee result = employeeService.save(employee);
-        return Response.accepted(result.getEmail()).build();
+        return Response.accepted(result.getId()).build();
     }
-
-
 
 }

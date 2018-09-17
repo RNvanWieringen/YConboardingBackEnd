@@ -1,5 +1,7 @@
 package com.onboarding.onboarding.model;
 
+import org.hibernate.sql.ordering.antlr.ColumnReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ public class Form {
     private String name; // name.pdf
     private String companyOfForm;
 
+
     @Column(columnDefinition="LONGBLOB")
     private byte[] formData;
 
@@ -23,7 +26,6 @@ public class Form {
 
     @OneToMany
     private List<Fillout> fillouts = new ArrayList<>();
-
 
     public long getId() {
         return id;
@@ -41,13 +43,6 @@ public class Form {
         this.name = name;
     }
 
-    public String getCompanyOfForm() {
-        return companyOfForm;
-    }
-
-    public void setCompanyOfForm(String companyOfForm) {
-        this.companyOfForm = companyOfForm;
-    }
 
     public byte[] getFormData() {
         return formData;
@@ -71,5 +66,13 @@ public class Form {
 
     public void setFillouts(List<Fillout> fillouts) {
         this.fillouts = fillouts;
+    }
+
+    public String getCompanyOftheFrom() {
+        return companyOfForm;
+    }
+
+    public void setCompanyOftheFrom(String companyOftheFrom) {
+        this.companyOfForm = companyOftheFrom;
     }
 }

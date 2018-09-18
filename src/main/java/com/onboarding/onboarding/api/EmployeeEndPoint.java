@@ -31,6 +31,9 @@ public class EmployeeEndPoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public Response postEmployee(Employee employee){
+
+        Employee withProgress = employeeService.findById(employee.getId());
+        employee.setProgress(withProgress.getProgress());
         Employee result = employeeService.save(employee);
         return Response.accepted(result.getId()).build();
     }

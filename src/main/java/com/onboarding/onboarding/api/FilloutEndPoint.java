@@ -2,8 +2,10 @@ package com.onboarding.onboarding.api;
 
 import com.onboarding.onboarding.model.Employee;
 import com.onboarding.onboarding.model.Fillout;
+import com.onboarding.onboarding.model.Progress;
 import com.onboarding.onboarding.persistence.EmployeeService;
 import com.onboarding.onboarding.persistence.FilloutService;
+import com.onboarding.onboarding.persistence.ProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,9 @@ public class FilloutEndPoint {
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private ProgressService progressService;
+
     @PostMapping("/postfillout")
     @Produces(MediaType.TEXT_PLAIN)
     public @ResponseBody Response postFillout(
@@ -35,6 +40,9 @@ public class FilloutEndPoint {
             System.out.println("We are here m8" + id);
             //byte[] file = new byte[5];
             Employee employee = employeeService.findById(Long.parseLong(id));
+            Progress prog = employee.getProgress();
+            prog.setStage(3);
+
             fillout.setFormData(file.getBytes());
             fillout.setEmployee(employee);
             System.out.println("Got a new fillout: " + fillout.getId());
@@ -48,6 +56,11 @@ public class FilloutEndPoint {
     public ResponseEntity<InputStreamResource> downloadFillout(@PathVariable(value="id") String id){
         Employee employee = employeeService.findById(Long.parseLong(id));
         Fillout fillout = filloutService.findFilloutByEmployee(employee);
+        Progress prog2 = employee.getProgress();
+        System.out.println("this is when it gets made! " + prog2);
+
+        //prog2.setStage(2);
+
 
         FileOutputStream out = null;
         try {
@@ -55,6 +68,8 @@ public class FilloutEndPoint {
             out = new FileOutputStream(f);
             out.write(fillout.getFormData());
             InputStreamResource resource = new InputStreamResource(new FileInputStream(f));
+
+            System.out.println("this is when it gets made! ");
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION,
                             "attachment;filename=" + f.getName())

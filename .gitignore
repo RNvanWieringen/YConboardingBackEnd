@@ -11,6 +11,19 @@
 .sts4-cache
 *.properties
 
+*.zip
+
+*.pdf
+*.pdf0
+*.pdf0f
+*.pdf1
+*.pdf1f
+*.pdf2
+*.pdf2f
+
+*.cfg
+
+
 ### IntelliJ IDEA ###
 .idea
 *.iws

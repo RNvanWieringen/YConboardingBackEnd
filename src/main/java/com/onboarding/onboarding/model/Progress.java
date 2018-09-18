@@ -8,11 +8,15 @@ public class Progress {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private boolean credentialsCompleted;
-    private boolean contractSigned;
 
-    @OneToOne
-    private Employee employee;
+    private int stage; // 0 -> employee created, 1 -> employee invited, 2 -> forms downloaded, 3-> forms uploaded
+//    private boolean employeeInvited;
+//    private boolean formsUploaded;
+
+//    @OneToOne
+//    private Employee employee;
+
+
 
 
     public long getId() {
@@ -23,21 +27,35 @@ public class Progress {
         this.id = id;
     }
 
-    public boolean isCredentialsCompleted() {
-        return credentialsCompleted;
+    public int getStage() {
+        return stage;
     }
 
-    public void setCredentialsCompleted(boolean credentialsCompleted) {
-        this.credentialsCompleted = credentialsCompleted;
+    public void setStage(int stage) {
+        this.stage = stage;
     }
 
-    public boolean isContractSigned() {
-        return contractSigned;
-    }
+    //    public boolean isEmployeeInvited() {
+//        return employeeInvited;
+//    }
+//
+//    public void setEmployeeInvited(boolean employeeInvited) {
+//        this.employeeInvited = employeeInvited;
+//    }
+//
+//    public boolean isFormsUploaded() {
+//        return formsUploaded;
+//    }
+//
+//    public void setFormsUploaded(boolean formsUploaded) {
+//        this.formsUploaded = formsUploaded;
+//    }
 
-    public void setContractSigned(boolean contractSigned) {
-        this.contractSigned = contractSigned;
-    }
-
-
+//    public Employee getEmployee() {
+//        return employee;
+//    }
+//
+//    public void setEmployee(Employee employee) {
+//        this.employee = employee;
+//    }
 }

@@ -36,9 +36,7 @@ public class FormEndPoint {
     @GetMapping("/forms.zip/{id}")
     public ResponseEntity<InputStreamResource> downloadFillout(@PathVariable(value="id") String id){
         try {
-            System.out.println("THE FOUND ID IS: " + id + "   ");
             Employee emp = employeeService.findById(Long.parseLong(id));
-
 
             for(Object ent : emp.getHashMapData().entrySet()) {
                 Map.Entry entry = (Map.Entry) ent;
@@ -99,7 +97,7 @@ public class FormEndPoint {
     private List<File> fillForms(Employee emp) throws Exception {
         String targetFolder = "prefills/" + emp.getFirstName() + "___" + emp.getLastName();
         new File(targetFolder).mkdirs();
-        Iterator<Form> forms = formService.findAll().iterator();
+        Iterator<Form> forms = formService.findByProgram(emp.getYcProgram()).iterator();
         List<File> filledForms = new ArrayList<>();
         while(forms.hasNext()) {
             Form form = forms.next();

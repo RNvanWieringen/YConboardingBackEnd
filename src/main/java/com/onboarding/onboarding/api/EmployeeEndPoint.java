@@ -31,6 +31,8 @@ public class EmployeeEndPoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public Response postEmployee(Employee employee){
+        Employee withProgram = employeeService.findById(employee.getId());
+        employee.setYcProgram(withProgram.getYcProgram());
         Employee result = employeeService.save(employee);
         return Response.accepted(result.getId()).build();
     }

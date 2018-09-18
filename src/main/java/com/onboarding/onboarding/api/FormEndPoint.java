@@ -47,9 +47,6 @@ public class FormEndPoint {
             Employee emp = employeeService.findById(Long.parseLong(id));
             Progress prog = emp.getProgress();
             prog.setStage(2);
-
-// try and put here the progress stuff
-
             for(Object ent : emp.getHashMapData().entrySet()) {
                 Map.Entry entry = (Map.Entry) ent;
                 System.out.println(entry.getKey() + "  " + entry.getValue());

@@ -56,10 +56,6 @@ public class FilloutEndPoint {
     public ResponseEntity<InputStreamResource> downloadFillout(@PathVariable(value="id") String id){
         Employee employee = employeeService.findById(Long.parseLong(id));
         Fillout fillout = filloutService.findFilloutByEmployee(employee);
-        Progress prog2 = employee.getProgress();
-        System.out.println("this is when it gets made! " + prog2);
-
-        //prog2.setStage(2);
 
 
         FileOutputStream out = null;
@@ -69,7 +65,6 @@ public class FilloutEndPoint {
             out.write(fillout.getFormData());
             InputStreamResource resource = new InputStreamResource(new FileInputStream(f));
 
-            System.out.println("this is when it gets made! ");
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION,
                             "attachment;filename=" + f.getName())

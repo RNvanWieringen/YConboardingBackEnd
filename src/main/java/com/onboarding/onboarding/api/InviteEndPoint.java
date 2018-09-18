@@ -41,7 +41,6 @@ public class InviteEndPoint {
         employee.setLoonheffing(false);
         employee.setHouseNumber(-1);
         Employee result = employeeService.save(employee);
-        String url = "http://localhost:63342/OnboardingAppFrontEnd/demo/employee_page.html?id=" + result.getId();
-        return Response.accepted(url).build();
+        return Response.accepted(result.getId()).build();
     }
 }

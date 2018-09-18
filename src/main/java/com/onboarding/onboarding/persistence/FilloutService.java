@@ -17,12 +17,14 @@ public class FilloutService {
         return filloutRepository.save(fillout);
     }
 
+    public void deleteByEmployee(Employee employee) { filloutRepository.deleteByEmployee(employee);}
+
     public Fillout findById(Long id){
         return filloutRepository.findById(id).get();
     }
 
     public Fillout findFilloutByEmployee(Employee employee) {
-        return findById(Long.parseLong(filloutRepository.findFilloutByEmployee(employee)));
+        return filloutRepository.findFilloutByEmployee(employee);
     }
 
     public Iterable <Fillout> findAll(){

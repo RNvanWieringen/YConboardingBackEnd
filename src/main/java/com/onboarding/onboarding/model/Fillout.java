@@ -16,6 +16,15 @@ public class Fillout {
     @OneToOne
     private Employee employee;
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String fileName;
 
     public long getId() {
         return id;

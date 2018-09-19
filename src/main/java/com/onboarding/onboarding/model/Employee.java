@@ -82,6 +82,14 @@ public class Employee {
 
     }
 
+    public YCProgram getYcProgram() {
+        return ycProgram;
+    }
+
+    public void setYcProgram(YCProgram ycProgram) {
+        this.ycProgram = ycProgram;
+    }
+
     @ManyToOne
     private YCProgram ycProgram;
 

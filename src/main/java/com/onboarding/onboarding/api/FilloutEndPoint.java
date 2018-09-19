@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.*;
 import java.io.File;
@@ -32,12 +33,11 @@ public class FilloutEndPoint {
             @RequestParam(value="id") String id,
             Fillout fillout){
         try {
-            System.out.println("We are here m8" + id);
-            //byte[] file = new byte[5];
             Employee employee = employeeService.findById(Long.parseLong(id));
             fillout.setFormData(file.getBytes());
             fillout.setEmployee(employee);
-            System.out.println("Got a new fillout: " + fillout.getId());
+            fillout.setFileName(file.getOriginalFilename());
+            filloutService.deleteByEmployee(employee);
             filloutService.save(fillout);
            return Response.status(201).build();
         }catch(Exception e){e.printStackTrace();}
@@ -47,17 +47,18 @@ public class FilloutEndPoint {
     @GetMapping("fillout/{id}")
     public ResponseEntity<InputStreamResource> downloadFillout(@PathVariable(value="id") String id){
         Employee employee = employeeService.findById(Long.parseLong(id));
+
         Fillout fillout = filloutService.findFilloutByEmployee(employee);
 
         FileOutputStream out = null;
         try {
-            File f = new File(employee.getFirstName() + "_" + employee.getLastName() + ".zip");
+            File f = new File(fillout.getFileName());
             out = new FileOutputStream(f);
             out.write(fillout.getFormData());
             InputStreamResource resource = new InputStreamResource(new FileInputStream(f));
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION,
-                            "attachment;filename=" + f.getName())
+                            "attachment;filename=" + fillout.getFileName())
                     .contentType(org.springframework.http.MediaType.APPLICATION_OCTET_STREAM).contentLength(f.length())
                     .body(resource);
         }catch(Exception e) {

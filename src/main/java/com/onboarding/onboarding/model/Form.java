@@ -27,6 +27,25 @@ public class Form {
     @OneToMany
     private List<Fillout> fillouts = new ArrayList<>();
 
+    public String getCompanyOfForm() {
+        return companyOfForm;
+    }
+
+    public void setCompanyOfForm(String companyOfForm) {
+        this.companyOfForm = companyOfForm;
+    }
+
+    public YCProgram getProgram() {
+        return program;
+    }
+
+    public void setProgram(YCProgram program) {
+        this.program = program;
+    }
+
+    @OneToOne
+    private YCProgram program;
+
     public long getId() {
         return id;
     }

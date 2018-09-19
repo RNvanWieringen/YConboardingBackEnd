@@ -36,9 +36,7 @@ public class FormEndPoint {
     @GetMapping("/forms.zip/{id}")
     public ResponseEntity<InputStreamResource> downloadFillout(@PathVariable(value="id") String id){
         try {
-            System.out.println("THE FOUND ID IS: " + id + "   ");
             Employee emp = employeeService.findById(Long.parseLong(id));
-
 
             for(Object ent : emp.getHashMapData().entrySet()) {
                 Map.Entry entry = (Map.Entry) ent;
@@ -61,9 +59,16 @@ public class FormEndPoint {
     }
 
     private File zippify(List<File> files, Employee emp) throws FileNotFoundException, IOException {
-        File zip = new File(emp.getId() + ".zip");
+        File zip = new File("prefills/" + emp.getId() + ".zip");
+        zip.getParentFile().mkdirs();
         FileOutputStream fos = new FileOutputStream(zip);
         ZipOutputStream zos = new ZipOutputStream(fos);
+
+        File parent = null;
+        if(files.size() > 0) {
+            parent = files.get(0).getParentFile();
+        }
+
         for(File file : files) {
             FileInputStream fis = new FileInputStream(file);
             ZipEntry zipEntry = new ZipEntry(file.getName());
@@ -77,27 +82,33 @@ public class FormEndPoint {
 
             zos.closeEntry();
             fis.close();
+            file.delete();
         }
-
         zos.close();
         fos.close();
+
+        if(parent != null) {
+            parent.delete();
+        }
+
         return zip;
     }
 
     private List<File> fillForms(Employee emp) throws Exception {
-        Iterator<Form> forms = formService.findAll().iterator();
+        String targetFolder = "prefills/" + emp.getFirstName() + "___" + emp.getLastName();
+        new File(targetFolder).mkdirs();
+        Iterator<Form> forms = formService.findByProgram(emp.getYcProgram()).iterator();
         List<File> filledForms = new ArrayList<>();
         while(forms.hasNext()) {
             Form form = forms.next();
-            File file = new File("config.cfg");
-            System.out.println(file.getAbsolutePath());
+            File file = new File(targetFolder + "/" + "config.cfg");
             PrintStream out = new PrintStream(file);
             out.write(form.getFormConfigPDF());
             out.close();
             FillConfiguration configuration = FillConfiguration.loadConfiguration(file);
             //FillConfiguration configuration = FillConfiguration.loadConfiguration(new File("D:\\Formulier telefoon.cfg"));
 
-            File formFile = new File(form.getName() + ".pdf");
+            File formFile = new File(targetFolder + "/" + form.getName() + ".pdf");
             out = new PrintStream(formFile);
             out.write(form.getFormData());
             out.close();
@@ -105,10 +116,12 @@ public class FormEndPoint {
 
             convertConfiguration(configuration, emp);
 
-            //TODO fix me
             File filled = new File(formFile.getAbsolutePath() + "filled.pdf");
             PDFFiller.fillPDF(formFile.getAbsolutePath(), filled.getAbsolutePath(), configuration);
             filledForms.add(filled);
+
+            formFile.delete();
+            file.delete();
         }
 
         return filledForms;

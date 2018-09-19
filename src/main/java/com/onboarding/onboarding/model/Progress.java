@@ -8,11 +8,9 @@ public class Progress {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private boolean credentialsCompleted;
-    private boolean contractSigned;
 
-    @OneToOne
-    private Employee employee;
+    private int stage; // 0 -> employee created, 1 -> employee invited, 2 -> forms downloaded, 3-> forms uploaded
+
 
 
     public long getId() {
@@ -23,19 +21,12 @@ public class Progress {
         this.id = id;
     }
 
-    public boolean isCredentialsCompleted() {
-        return credentialsCompleted;
+    public int getStage() {
+        return stage;
     }
 
-    public void setCredentialsCompleted(boolean credentialsCompleted) {
-        this.credentialsCompleted = credentialsCompleted;
+    public void setStage(int stage) {
+        this.stage = stage;
     }
 
-    public boolean isContractSigned() {
-        return contractSigned;
-    }
-
-    public void setContractSigned(boolean contractSigned) {
-        this.contractSigned = contractSigned;
-    }
 }

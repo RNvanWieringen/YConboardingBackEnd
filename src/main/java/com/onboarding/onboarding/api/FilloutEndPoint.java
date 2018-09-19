@@ -2,8 +2,10 @@ package com.onboarding.onboarding.api;
 
 import com.onboarding.onboarding.model.Employee;
 import com.onboarding.onboarding.model.Fillout;
+import com.onboarding.onboarding.model.Progress;
 import com.onboarding.onboarding.persistence.EmployeeService;
 import com.onboarding.onboarding.persistence.FilloutService;
+import com.onboarding.onboarding.persistence.ProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,9 @@ public class FilloutEndPoint {
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private ProgressService progressService;
+
     @PostMapping("/postfillout")
     @Produces(MediaType.TEXT_PLAIN)
     public @ResponseBody Response postFillout(
@@ -34,6 +39,9 @@ public class FilloutEndPoint {
             Fillout fillout){
         try {
             Employee employee = employeeService.findById(Long.parseLong(id));
+            Progress prog = employee.getProgress();
+            prog.setStage(3);
+
             fillout.setFormData(file.getBytes());
             fillout.setEmployee(employee);
             fillout.setFileName(file.getOriginalFilename());
@@ -50,12 +58,14 @@ public class FilloutEndPoint {
 
         Fillout fillout = filloutService.findFilloutByEmployee(employee);
 
+
         FileOutputStream out = null;
         try {
             File f = new File(fillout.getFileName());
             out = new FileOutputStream(f);
             out.write(fillout.getFormData());
             InputStreamResource resource = new InputStreamResource(new FileInputStream(f));
+
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION,
                             "attachment;filename=" + fillout.getFileName())

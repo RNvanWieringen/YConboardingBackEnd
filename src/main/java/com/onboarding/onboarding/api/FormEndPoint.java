@@ -3,6 +3,7 @@ package com.onboarding.onboarding.api;
 
 import com.onboarding.onboarding.model.Employee;
 import com.onboarding.onboarding.model.Form;
+import com.onboarding.onboarding.model.Progress;
 import com.onboarding.onboarding.persistence.EmployeeService;
 import com.onboarding.onboarding.persistence.FormService;
 import config.FillConfiguration;
@@ -15,7 +16,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,6 +30,7 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+@Path("form")
 @Controller
 public class FormEndPoint {
 
@@ -37,6 +44,9 @@ public class FormEndPoint {
     public ResponseEntity<InputStreamResource> downloadFillout(@PathVariable(value="id") String id){
         try {
             Employee emp = employeeService.findById(Long.parseLong(id));
+
+            Progress prog = emp.getProgress();
+            prog.setStage(2);
 
             for(Object ent : emp.getHashMapData().entrySet()) {
                 Map.Entry entry = (Map.Entry) ent;
@@ -138,6 +148,13 @@ public class FormEndPoint {
             }
         }
     }
+
+     @GET
+        @Produces(MediaType.APPLICATION_JSON)
+        public Response listGroep(){
+            Iterable <Form> form = formService.findAll();
+            return Response.ok(form).build();
+        }
 
    /* @POST
     @Consumes(MediaType.APPLICATION_JSON)

@@ -93,6 +93,17 @@ public class Employee {
     @ManyToOne
     private YCProgram ycProgram;
 
+    public Progress getProgress() {
+        return progress;
+    }
+
+    public void setProgress(Progress progress) {
+        this.progress = progress;
+    }
+
+    @OneToOne
+    private Progress progress;
+
    // @OneToMany
    // private List<Fillout> fillout = new ArrayList<>();
 

@@ -10,11 +10,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.onboarding.onboarding.model.Employee;
-import com.onboarding.onboarding.model.Invite;
-import com.onboarding.onboarding.model.Team;
-import com.onboarding.onboarding.model.YCProgram;
+
 import com.onboarding.onboarding.persistence.EmployeeService;
+
+import com.onboarding.onboarding.model.*;
+import com.onboarding.onboarding.persistence.EmployeeService;
+import com.onboarding.onboarding.persistence.ProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,12 @@ public class InviteEndPoint {
 
     @Autowired
     private EmployeeService employeeService;
+
+
+    @Autowired
+    private ProgressService progressService;
+
+
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -37,10 +44,18 @@ public class InviteEndPoint {
     @Produces(MediaType.TEXT_PLAIN)
     public Response postInvite(Invite invite) {
         Employee employee = new Employee();
+        Progress progress = new Progress();
+        progress.setStage(0);
         employee.setYcProgram(invite.getProgram());
         employee.setLoonheffing(false);
         employee.setHouseNumber(-1);
         Employee result = employeeService.save(employee);
+        progress = progressService.save(progress);
+        progress.setStage(1);
+        result.setProgress(progress);
+        result = employeeService.save(employee);
+        progressService.save(progress);
         return Response.accepted(result.getId()).build();
+
     }
 }

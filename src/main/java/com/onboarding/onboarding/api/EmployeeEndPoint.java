@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 
 import com.onboarding.onboarding.model.Employee;
 import com.onboarding.onboarding.persistence.EmployeeService;
+import com.onboarding.onboarding.persistence.YCProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,9 @@ public class EmployeeEndPoint {
 
     @Autowired
     private EmployeeService employeeService;
+
+//    @Autowired
+//    private YCProgramService ycProgramService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -31,8 +35,12 @@ public class EmployeeEndPoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public Response postEmployee(Employee employee){
-        Employee withProgram = employeeService.findById(employee.getId());
-        employee.setYcProgram(withProgram.getYcProgram());
+
+        Employee withProgress = employeeService.findById(employee.getId());
+        employee.setProgress(withProgress.getProgress());
+         Employee withYCProgram =  employeeService.findById(employee.getId());
+         employee.setYcProgram(withYCProgram.getYcProgram());
+
         Employee result = employeeService.save(employee);
         return Response.accepted(result.getId()).build();
     }

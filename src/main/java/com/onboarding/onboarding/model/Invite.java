@@ -9,7 +9,18 @@ public class Invite {
     private long id;
 
     private String email;
+
     private String name;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    private String url;
 
     public long getId() {
         return id;

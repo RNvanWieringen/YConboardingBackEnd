@@ -10,6 +10,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.onboarding.onboarding.mail.InviteEmail;
+import com.onboarding.onboarding.mail.Mail;
+import com.onboarding.onboarding.mail.MailManager;
 import com.onboarding.onboarding.model.Employee;
 import com.onboarding.onboarding.model.Invite;
 import com.onboarding.onboarding.model.Team;
@@ -36,11 +39,23 @@ public class InviteEndPoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public Response postInvite(Invite invite) {
+        System.out.println("INVITING YEEEE BOI");
         Employee employee = new Employee();
         employee.setYcProgram(invite.getProgram());
         employee.setLoonheffing(false);
         employee.setHouseNumber(-1);
+        employee.setFirstName(invite.getName());
+        employee.setLastName("");
         Employee result = employeeService.save(employee);
+
+        try {
+            Mail mail = new InviteEmail(invite, result);
+            MailManager sender = new MailManager();
+            sender.sendMail(mail);
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+
         return Response.accepted(result.getId()).build();
     }
 }

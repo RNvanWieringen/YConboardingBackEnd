@@ -23,6 +23,7 @@ public class EmployeeEndPoint {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response listGroep(){
+        System.out.println("Getting employees");
         Iterable <Employee> employee = employeeService.findAll();
         return Response.ok(employee).build();
     }

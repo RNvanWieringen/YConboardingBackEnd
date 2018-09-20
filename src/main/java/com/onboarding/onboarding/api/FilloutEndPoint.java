@@ -40,7 +40,7 @@ public class FilloutEndPoint {
         try {
             Employee employee = employeeService.findById(Long.parseLong(id));
             Progress prog = employee.getProgress();
-            prog.setStage(3);
+            prog.setStage(100);
 
             fillout.setFormData(file.getBytes());
             fillout.setEmployee(employee);

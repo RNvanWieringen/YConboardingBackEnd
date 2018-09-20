@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.onboarding.onboarding.persistence.EmployeeService;
 
 import com.onboarding.onboarding.model.*;
@@ -51,11 +52,13 @@ public class InviteEndPoint {
         employee.setHouseNumber(-1);
         Employee result = employeeService.save(employee);
         progress = progressService.save(progress);
-        progress.setStage(1);
+        progress.setStage(33);
+        progress = progressService.save(progress);
         result.setProgress(progress);
         result = employeeService.save(employee);
-        progressService.save(progress);
-        return Response.accepted(result.getId()).build();
+        String response = "{ \"id\": \" "+ result.getId() +" \", \"progress\": \" "+ result.getProgress().getStage() +" \" }";
+              return Response.accepted(response).build();
+        //      return Response.accepted(result.getId()).build();
 
     }
 }

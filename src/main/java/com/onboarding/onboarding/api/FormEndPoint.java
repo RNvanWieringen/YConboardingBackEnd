@@ -44,9 +44,9 @@ public class FormEndPoint {
     public ResponseEntity<InputStreamResource> downloadFillout(@PathVariable(value="id") String id){
         try {
             Employee emp = employeeService.findById(Long.parseLong(id));
-
             Progress prog = emp.getProgress();
             prog.setStage(66);
+
 
             for(Object ent : emp.getHashMapData().entrySet()) {
                 Map.Entry entry = (Map.Entry) ent;

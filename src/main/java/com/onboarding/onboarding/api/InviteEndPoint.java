@@ -15,6 +15,13 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.onboarding.onboarding.persistence.EmployeeService;
 
 import com.onboarding.onboarding.model.*;
+import com.onboarding.onboarding.mail.InviteEmail;
+import com.onboarding.onboarding.mail.Mail;
+import com.onboarding.onboarding.mail.MailManager;
+import com.onboarding.onboarding.model.Employee;
+import com.onboarding.onboarding.model.Invite;
+import com.onboarding.onboarding.model.Team;
+import com.onboarding.onboarding.model.YCProgram;
 import com.onboarding.onboarding.persistence.EmployeeService;
 import com.onboarding.onboarding.persistence.ProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +51,15 @@ public class InviteEndPoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public Response postInvite(Invite invite) {
+        System.out.println("INVITING YEEEE BOI");
         Employee employee = new Employee();
         Progress progress = new Progress();
         progress.setStage(0);
         employee.setYcProgram(invite.getProgram());
         employee.setLoonheffing(false);
         employee.setHouseNumber(-1);
+        employee.setFirstName(invite.getName());
+        employee.setLastName("");
         Employee result = employeeService.save(employee);
         progress = progressService.save(progress);
         progress.setStage(33);
@@ -57,8 +67,19 @@ public class InviteEndPoint {
         result.setProgress(progress);
         result = employeeService.save(employee);
         String response = "{ \"id\": \" "+ result.getId() +" \", \"progress\": \" "+ result.getProgress().getStage() +" \" }";
-              return Response.accepted(response).build();
+     //         return Response.accepted(response).build();
         //      return Response.accepted(result.getId()).build();
+
+
+        try {
+            Mail mail = new InviteEmail(invite, result);
+            MailManager sender = new MailManager();
+            sender.sendMail(mail);
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return Response.accepted(response).build();
 
     }
 }

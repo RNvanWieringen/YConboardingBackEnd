@@ -27,6 +27,7 @@ public class EmployeeEndPoint {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response listGroep(){
+        System.out.println("Getting employees");
         Iterable <Employee> employee = employeeService.findAll();
         return Response.ok(employee).build();
     }
@@ -35,12 +36,10 @@ public class EmployeeEndPoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public Response postEmployee(Employee employee){
-
         Employee withProgress = employeeService.findById(employee.getId());
         employee.setProgress(withProgress.getProgress());
          Employee withYCProgram =  employeeService.findById(employee.getId());
          employee.setYcProgram(withYCProgram.getYcProgram());
-
         Employee result = employeeService.save(employee);
         return Response.accepted(result.getId()).build();
     }
